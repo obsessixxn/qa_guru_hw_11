@@ -29,8 +29,6 @@ def options_for_browser():
     }
 
     options.capabilities.update(selenoid_capabilities)
-
-    browser.driver.set_window_size(1920, 1080)
     yield browser
 
     attach.add_screenshot(browser)
