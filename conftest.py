@@ -7,13 +7,6 @@ from utils import attach
 from dotenv import load_dotenv
 
 
-def pytest_addoption(parser):
-    parser.addoption(
-        "--browser_version",
-        default='128.0'
-    )
-
-
 @pytest.fixture(scope='session', autouse=True)
 def load_env():
     load_dotenv()
@@ -26,12 +19,12 @@ def selenoid_browser(request):
 
 @pytest.fixture(scope='function')
 def options_for_browser(request):
-    browser_version = request.config.getoption('--browser_version')
+
     options = webdriver.ChromeOptions()
 
     selenoid_capabilities = {
         "browserName": 'chrome',
-        "browserVersion": browser_version,
+        "browserVersion": '128.0',
         "selenoid:options": {
             "enableVideo": True,
             "enableVNS": True
