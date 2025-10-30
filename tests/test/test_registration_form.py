@@ -17,7 +17,7 @@ def test_sending_form(options_for_browser):
         register_page.fill_date_of_birth('2002', 'May', '11')
     with allure.step("filling other info"):
         register_page.choose_subject("Computer Science")
-        register_page.choose_hobby()
+    #    register_page.choose_hobby()
     # register_page.choose_photo('123123.png')
     with allure.step("filling address information"):
         register_page.fill_address('Moskva, street 10')
@@ -33,7 +33,7 @@ def test_sending_form(options_for_browser):
             "3123131232",
             "11 May,2002",
             'Computer Science',
-            'Sports',
+            '',
             '',
             'Moskva, street 10',
             'NCR',

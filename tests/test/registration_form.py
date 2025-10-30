@@ -1,3 +1,5 @@
+import os
+
 from selene import have
 
 
@@ -36,7 +38,7 @@ class RegistrationFormPage:
         self.browser.element("#subjectsInput").type(value).press_enter()
 
     def choose_hobby(self):
-        self.browser.element('label[for="hobbies-checkbox-1"]').click()
+        self.browser.element('label[for="hobbies-checkbox-2"]').click()
 
     def choose_photo(self, value):
         self.browser.element("#uploadPicture").set_value(os.path.abspath(f'./img/{value}'))
