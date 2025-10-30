@@ -9,7 +9,7 @@ def options_for_browser():
     options = webdriver.ChromeOptions()
     options.add_argument("--window-size=1920,1080")
     driver = webdriver.Remote(
-        command_executor="https://user1:1234@selenoid.autotests.cloud/wd/hub",
+        command_executor="https:selenoid.autotests.cloud/wd/hub",
         options=options)
     browser = Browser(
         Config(
