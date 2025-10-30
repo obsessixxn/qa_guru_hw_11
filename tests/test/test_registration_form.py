@@ -1,6 +1,5 @@
 import allure
 from registration_form import RegistrationFormPage
-from utils import attach
 
 
 def test_sending_form(options_for_browser):
@@ -41,8 +40,3 @@ def test_sending_form(options_for_browser):
             'Delhi'
         )
         browser.element('#closeLargeModal').click()
-
-    attach.add_screenshot(browser)
-    attach.add_logs(browser)
-    attach.add_html(browser)
-    attach.add_video(browser)

@@ -59,6 +59,8 @@ cover/
 
 .idea
 
+#secret
+.env
 # Django stuff:
 *.log
 local_settings.py

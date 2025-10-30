@@ -1,15 +1,48 @@
+import os
+
 import pytest
 from selene import browser, Config, Browser
 from selenium import webdriver
 from utils import attach
+from dotenv import load_dotenv
 
 
-@pytest.fixture()
-def options_for_browser():
+def pytest_addoption(parser):
+    parser.addoption(
+        "--browser_version",
+        default='128.0'
+    )
+
+
+@pytest.fixture(scope='session', autouse=True)
+def load_env():
+    load_dotenv()
+
+
+@pytest.fixture(scope='session')
+def selenoid_browser(request):
+    return request.config.getoption('--browser')
+
+
+@pytest.fixture(scope='function')
+def options_for_browser(request):
+    browser_version = request.config.getoption('--browser_version')
     options = webdriver.ChromeOptions()
-    options.add_argument("--window-size=1920,1080")
+
+    selenoid_capabilities = {
+        "browserName": 'chrome',
+        "browserVersion": browser_version,
+        "selenoid:options": {
+            "enableVideo": True,
+            "enableVNS": True
+        }
+    }
+
+    login = os.getenv("LOGIN")
+    password = os.getenv("PASSWORD")
+
     driver = webdriver.Remote(
-        command_executor="https://user1:1234@selenoid.autotests.cloud/wd/hub",
+        command_executor=f"https://{login}:{password}@selenoid.autotests.cloud/wd/hub",
         options=options)
     browser = Browser(
         Config(
@@ -19,16 +52,12 @@ def options_for_browser():
             window_height=1080,
         )
     )
-    selenoid_capabilities = {
-        "browserName": "chrome",
-        "browserVersion": "128.0",
-        "selenoid:options": {
-            "enableVideo": True,
-            "enableVNS": True
-        }
-    }
 
     options.capabilities.update(selenoid_capabilities)
     yield browser
+    attach.add_html(browser)
+    attach.add_screenshot(browser)
+    attach.add_logs(browser)
+    attach.add_video(browser)
 
     browser.quit()
