@@ -31,9 +31,5 @@ def options_for_browser():
     options.capabilities.update(selenoid_capabilities)
     yield browser
 
-    attach.add_screenshot(browser)
-    attach.add_logs(browser)
-    attach.add_html(browser)
-    attach.add_video(browser)
 
     browser.quit()
